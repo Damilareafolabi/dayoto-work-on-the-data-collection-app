@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "Form": {
+      "title": "Form",
+      "description": "SurveyCTO / ODK Form definition including questions, validation, and encryption metadata.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "formId": { "type": "string" },
+        "title": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" },
+        "schemaJson": { "type": "string" },
+        "isEncrypted": { "type": "boolean" },
+        "publicKey": { "type": "string" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["formId", "title", "version"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "Survey submission collected in the field with offline sync status, audit logs, and encrypted payload.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "instanceId": { "type": "string" },
+        "formId": { "type": "string" },
+        "formVersion": { "type": "string" },
+        "enumeratorId": { "type": "string" },
+        "enumeratorName": { "type": "string" },
+        "deviceId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "submitted", "synced", "flagged"] },
+        "dataJson": { "type": "string" },
+        "encryptedData": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "durationSeconds": { "type": "number" },
+        "audioAuditActive": { "type": "boolean" },
+        "submittedAt": { "type": "string" },
+        "syncedAt": { "type": "string" }
+      },
+      "required": ["instanceId", "formId", "status"]
+    },
+    "Enumerator": {
+      "title": "Enumerator",
+      "description": "Field surveyor device profile and assignment details.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "region": { "type": "string" },
+        "deviceId": { "type": "string" },
+        "totalSubmissions": { "type": "number" },
+        "status": { "type": "string" },
+        "lastSeenAt": { "type": "string" }
+      },
+      "required": ["name", "deviceId"]
+    },
+    "SituationAlert": {
+      "title": "SituationAlert",
+      "description": "Real-time field anomaly or quality control alert in the situation room.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "severity": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+        "enumeratorName": { "type": "string" },
+        "formId": { "type": "string" },
+        "message": { "type": "string" },
+        "resolved": { "type": "boolean" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["type", "severity", "message"]
+    }
+  },
+  "firestore": {
+    "/forms/{formId}": {
+      "schema": "Form",
+      "description": "Collection of SurveyCTO / ODK form definitions."
+    },
+    "/submissions/{submissionId}": {
+      "schema": "Submission",
+      "description": "Collection of field survey submissions."
+    },
+    "/enumerators/{enumeratorId}": {
+      "schema": "Enumerator",
+      "description": "Enumerator roster and device registrations."
+    },
+    "/situation_alerts/{alertId}": {
+      "schema": "SituationAlert",
+      "description": "Field situation room quality control and monitoring alerts."
+    }
+  }
+}

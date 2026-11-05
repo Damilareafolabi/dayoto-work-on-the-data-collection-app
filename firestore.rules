@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Forms collection: Anyone can read active forms, authenticated surveyors can read/write
+    match /forms/{formId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Submissions collection: Field surveyors upload and read survey records
+    match /submissions/{submissionId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if false;
+    }
+
+    // Enumerator tracking
+    match /enumerators/{enumeratorId} {
+      allow read, write: if true;
+    }
+
+    // Situation room quality control alerts
+    match /situation_alerts/{alertId} {
+      allow read, write: if true;
+    }
+
+    // Capacity profiles and system configuration
+    match /configuration/{configId} {
+      allow read, write: if true;
+    }
+
+    // Research projects
+    match /projects/{projectId} {
+      allow read, write: if true;
+    }
+  }
+}

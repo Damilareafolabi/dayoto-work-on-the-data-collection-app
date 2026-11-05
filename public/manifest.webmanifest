@@ -1,0 +1,31 @@
+{
+  "id": "/",
+  "name": "CMRG DataCollect",
+  "short_name": "CMRGCollect",
+  "description": "Standalone offline-first field survey application with encrypted local storage and server-side PostgreSQL synchronization.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#dc2626",
+  "background_color": "#090d16",
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

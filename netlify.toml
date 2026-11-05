@@ -1,0 +1,35 @@
+# =========================================================================
+# CMRG DATA COLLECT — NETLIFY PRODUCTION DEPLOYMENT CONFIGURATION
+# Communication & Marketing Research Group Limited (CMRG)
+# =========================================================================
+
+[build]
+  publish = "netlify-deploy"
+  functions = "netlify/functions"
+  command = "npm run build:netlify"
+
+# Redirect all API requests to the Netlify Serverless Function router
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# Single Page Application (SPA) client-side routing fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security and Field Sensor Permissions Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(self), camera=(self), microphone=(self)"
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization, x-enumerator-id, x-access-code"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"

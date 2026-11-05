@@ -1,0 +1,6 @@
+{
+  "name": "CMRG Data Collect",
+  "description": "Enterprise offline-first field data collection and monitoring platform for Communication & Marketing Research Group.",
+  "requestFramePermissions": ["geolocation", "camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
